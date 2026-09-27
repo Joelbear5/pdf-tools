@@ -1,10 +1,3 @@
-# PDF Tools
-
-A collection of focused utilities for working with PDFs. Each application keeps its own code, dependencies, tests, assets, and platform build scripts so tools can evolve independently.
-
-## Applications
-
-- [ClearCopy PDF](apps/clearcopy-pdf/README.md): create unrestricted copies of protected PDFs without changing the originals.
 # ClearCopy PDF
 
 ClearCopy PDF is a small desktop app for creating unrestricted copies of PDFs that open without a password. It never changes the selected originals. Each output is written beside its source as `<filename>_unprotected.pdf`; if that name already exists, a numbered name is used instead.
@@ -15,7 +8,7 @@ Rewriting a PDF may invalidate its digital signatures or certification. The app 
 
 ## Run from source
 
-Create a Python 3.14 environment, install the dependencies, and start the window:
+Run these commands from the `apps/clearcopy-pdf` directory. Create a Python 3.14 environment, install the dependencies, and start the window:
 
 ```sh
 python3.14 -m venv .venv

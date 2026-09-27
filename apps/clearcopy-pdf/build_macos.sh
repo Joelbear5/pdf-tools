@@ -11,6 +11,9 @@ if [ "$(uname -m)" != "arm64" ]; then
     exit 1
 fi
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$SCRIPT_DIR"
+
 python3.14 -m venv .venv
 . .venv/bin/activate
 python -m pip install -r requirements.txt
