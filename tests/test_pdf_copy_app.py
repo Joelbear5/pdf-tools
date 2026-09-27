@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pikepdf
 
-from pdf_copy_app import create_unprotected_copy
+from pdf_copy_app import create_unprotected_copy, inspect_pdf
 
 
 class CreateUnprotectedCopyTests(unittest.TestCase):
@@ -34,6 +34,42 @@ class CreateUnprotectedCopyTests(unittest.TestCase):
         with pikepdf.open(self.source) as source:
             self.assertTrue(source.is_encrypted)
             self.assertEqual(len(source.pages), 1)
+        with pikepdf.open(output) as copy:
+            self.assertFalse(copy.is_encrypted)
+            self.assertEqual(len(copy.pages), 1)
+
+    def test_inspects_permission_restrictions_and_unprotected_files(self) -> None:
+        self.assertEqual(inspect_pdf(self.source), "protected")
+
+        unrestricted = self.directory / "unrestricted.pdf"
+        pdf = pikepdf.new()
+        pdf.add_blank_page()
+        pdf.save(unrestricted)
+
+        self.assertEqual(inspect_pdf(unrestricted), "unprotected")
+
+    def test_inspects_view_restricted_files(self) -> None:
+        password_protected = self.directory / "password-protected.pdf"
+        pdf = pikepdf.new()
+        pdf.add_blank_page()
+        pdf.save(
+            password_protected,
+            encryption=pikepdf.Encryption(owner="owner-secret", user="open-secret", R=6),
+        )
+
+        self.assertEqual(inspect_pdf(password_protected), "view_restricted")
+
+    def test_creates_unprotected_copy_with_open_password(self) -> None:
+        password_protected = self.directory / "password-protected.pdf"
+        pdf = pikepdf.new()
+        pdf.add_blank_page()
+        pdf.save(
+            password_protected,
+            encryption=pikepdf.Encryption(owner="owner-secret", user="open-secret", R=6),
+        )
+
+        output = create_unprotected_copy(password_protected, "open-secret")
+
         with pikepdf.open(output) as copy:
             self.assertFalse(copy.is_encrypted)
             self.assertEqual(len(copy.pages), 1)

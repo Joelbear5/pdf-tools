@@ -1,8 +1,8 @@
-# PDF Copy
+# ClearCopy PDF
 
-PDF Copy is a small desktop app for creating unrestricted copies of PDFs that open without a password. It never changes the selected originals. Each output is written beside its source as `<filename>_unprotected.pdf`; if that name already exists, a numbered name is used instead.
+ClearCopy PDF is a small desktop app for creating unrestricted copies of PDFs that open without a password. It never changes the selected originals. Each output is written beside its source as `<filename>_unprotected.pdf`; if that name already exists, a numbered name is used instead.
 
-Files that require an open password are skipped and reported. The app does not ask for or store passwords.
+The file list shows whether each PDF is unrestricted, permission-protected, or requires an open password. Unrestricted files start unchecked, while permission-protected files start checked. To convert a PDF that requires an open password, check its Convert box and enter the password when prompted. Passwords are held in memory only while the app is open.
 
 Rewriting a PDF may invalidate its digital signatures or certification. The app warns before processing and does not modify the originals.
 
@@ -27,7 +27,19 @@ Build on an Apple Silicon Mac. PyInstaller does not cross-build a macOS app from
 sh build_macos.sh
 ```
 
-The app bundle will be `dist/PDF Copy.app`. Replace `org.example.pdfcopy` in `build_macos.sh` with an identifier owned by your organization before distributing it. For distribution to other Macs, sign and notarize the app with your organization's Apple Developer ID.
+The app bundle will be `dist/ClearCopy PDF.app`. Replace `org.example.clearcopypdf` in `build_macos.sh` with an identifier owned by your organization before distributing it. For distribution to other Macs, sign and notarize the app with your organization's Apple Developer ID.
+
+## Build for Windows
+
+Build on Windows with Python 3.14 available through the `py` launcher:
+
+```powershell
+.\build_windows.ps1
+```
+
+If PowerShell blocks the script, run `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` in that terminal first. This affects only the current PowerShell process.
+
+The standalone windowed executable will be `dist\ClearCopy PDF.exe`.
 
 ## Tests
 

@@ -14,4 +14,4 @@ fi
 python3.14 -m venv .venv
 . .venv/bin/activate
 python -m pip install -r requirements.txt
-python -m PyInstaller --noconfirm --clean --windowed --name "PDF Copy" --target-architecture arm64 --osx-bundle-identifier org.example.pdfcopy pdf_copy_app.py
+python -m PyInstaller --noconfirm --clean --windowed --name "ClearCopy PDF" --target-architecture arm64 --osx-bundle-identifier org.example.clearcopypdf --icon assets/clearcopy_icon.icns --add-data "assets/clearcopy_icon.png:assets" pdf_copy_app.py
